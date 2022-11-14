@@ -1,0 +1,21 @@
+[submodule "third_party/draco"]
+	path = third_party/draco
+	url = https://github.com/google/draco.git
+[submodule "third_party/gli"]
+	path = third_party/gli
+	url = https://github.com/g-truc/gli
+[submodule "third_party/glm"]
+	path = third_party/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "third_party/KTX-Software"]
+	path = third_party/KTX-Software
+	url = https://github.com/KhronosGroup/KTX-Software.git
+[submodule "third_party/tinygltf"]
+	path = third_party/tinygltf
+	url = https://github.com/syoyo/tinygltf.git
+[submodule "third_party/imgui"]
+	path = third_party/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "third_party/rapidjson"]
+	path = third_party/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
