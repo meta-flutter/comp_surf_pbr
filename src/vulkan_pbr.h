@@ -4,12 +4,13 @@
 #include "VulkanExampleBase.h"
 #include "VulkanTexture.hpp"
 #include "VulkanglTFModel.h"
-#include "ui.hpp"
+#include "VulkanUtils.hpp"
 
+#if defined(ENABLE_IMGUI)
+#include "ui.hpp"
+#endif
 
 #include <map>
-
-//static constexpr char kRuntimeAssetPath[] = RUNTIME_ASSET_PATH;
 
 class VulkanPbr : public VulkanExampleBase {
 public:
@@ -92,7 +93,9 @@ public:
         glm::vec3 rotation = glm::vec3(75.0f, 40.0f, 0.0f);
     } lightSource;
 
+#if defined(ENABLE_IMGUI)
     UI *ui;
+#endif
 
 #if defined(VK_USE_PLATFORM_ANDROID_KHR)
     const std::string assetpath = "";

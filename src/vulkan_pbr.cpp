@@ -69,7 +69,9 @@ VulkanPbr::~VulkanPbr() {
     textures.lutBrdf.destroy();
     textures.empty.destroy();
 
-//TODO    delete ui;
+#if defined(ENABLE_IMGUI)
+    delete ui;
+#endif
 }
 
 void VulkanPbr::renderNode(vkglTF::Node *node, uint32_t cbIndex, vkglTF::Material::AlphaMode alphaMode) {
@@ -243,7 +245,9 @@ void VulkanPbr::recordCommandBuffers() {
         }
 
         // User interface
-//TODO        ui->draw(currentCB);
+#if defined(ENABLE_IMGUI)
+        ui->draw(currentCB);
+#endif
 
         vkCmdEndRenderPass(currentCB);
         VK_CHECK_RESULT(vkEndCommandBuffer(currentCB));
@@ -1631,7 +1635,9 @@ void VulkanPbr::windowResized() {
     recordCommandBuffers();
     vkDeviceWaitIdle(device);
     updateUniformBuffers();
-//TODO    updateOverlay();
+#if defined(ENABLE_IMGUI)
+    updateOverlay();
+#endif
 }
 
 void VulkanPbr::prepare() {
@@ -1682,8 +1688,10 @@ void VulkanPbr::prepare() {
     setupDescriptors();
     preparePipelines();
 
-//TODO    ui = new UI(vulkanDevice, renderPass, queue, pipelineCache, settings.sampleCount, assetpath);
-//TODO    updateOverlay();
+#if defined(ENABLE_IMGUI)
+    ui = new UI(vulkanDevice, renderPass, queue, pipelineCache, settings.sampleCount, assetpath);
+    updateOverlay();
+#endif
 
     recordCommandBuffers();
 
@@ -1693,7 +1701,7 @@ void VulkanPbr::prepare() {
 /*
     Update ImGui user interface
 */
-#if 0
+#if defined(ENABLE_IMGUI)
 void VulkanPbr::updateOverlay() {
     ImGuiIO &io = ImGui::GetIO();
 
@@ -1719,7 +1727,7 @@ void VulkanPbr::updateOverlay() {
 
     ImGui::SetNextWindowPos(ImVec2(10, 10));
     ImGui::SetNextWindowSize(ImVec2(200 * scale, (models.scene.animations.size() > 0 ? 440 : 360) * scale),
-                             ImGuiSetCond_Always);
+                             ImGuiCond_FirstUseEver);
     ImGui::Begin("Vulkan glTF 2.0 PBR", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     ImGui::PushItemWidth(100.0f * scale);
 
@@ -1904,7 +1912,9 @@ void VulkanPbr::render() {
 
     camera.rotate(glm::vec3(3.5 * camera.rotationSpeed, -2.125 * camera.rotationSpeed, 0.0f));
 
-//    updateOverlay();
+#if defined(ENABLE_IMGUI)
+    updateOverlay();
+#endif
 
     VK_CHECK_RESULT(vkWaitForFences(device, 1, &waitFences[frameIndex], VK_TRUE, UINT64_MAX));
     VK_CHECK_RESULT(vkResetFences(device, 1, &waitFences[frameIndex]));

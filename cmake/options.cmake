@@ -27,12 +27,17 @@ if (USE_WAYLAND_WSI)
     add_compile_definitions(VK_USE_PLATFORM_WAYLAND_KHR)
 endif ()
 
-option (USE_XCB_WSI "Build the projcet using XCB swapchain" OFF)
+option (USE_XCB_WSI "Build the project using XCB swapchain" OFF)
 if (USE_XCB_WSI)
     message("Using XCB extension...")
     find_package(XCB REQUIRED)
     add_compile_definitions(VK_USE_PLATFORM_XCB_KHR)
 endif ()
+
+option (ENABLE_IMGUI "Enable Imgui UI" OFF)
+if (ENABLE_IMGUI)
+    add_compile_definitions(ENABLE_IMGUI)
+endif()
 
 set(RESOURCE_INSTALL_DIR "" CACHE PATH "Path to install resources to (leave empty for running uninstalled)")
 
