@@ -34,7 +34,6 @@ include_directories(third_party/rapidjson/include/rapidjson)
 string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
 string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--build-id=sha1")
 string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--gc-sections")
-string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--print-gc-sections")
 string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--as-needed")
 
 
