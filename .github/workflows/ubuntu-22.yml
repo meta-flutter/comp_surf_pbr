@@ -1,4 +1,4 @@
-name: ubuntu-22
+name: ubuntu-20
 
 on:
   pull_request:
@@ -10,20 +10,20 @@ on:
     - cron:  '0 0 * * *'
 
 jobs:
-  build:
+  ubuntu-20:
+
+    strategy:
+      fail-fast: false
+  
     runs-on: [self-hosted, linux]
 
     container:
       image: ghcr.io/meta-flutter/meta-flutter/ubuntu-20-dev:main
-      options:
-        --user 1000
-        --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs
-        --storage-opt overlay.mountopt=nodev,metacopy=on,noxattrs=1
 
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3        
 
       - name: Install packages
         run: |
