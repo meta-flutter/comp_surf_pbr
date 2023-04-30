@@ -19,6 +19,10 @@ jobs:
 
     container:
       image: ghcr.io/meta-flutter/meta-flutter/ubuntu-20-dev:main
+      options:
+        --userns=keep-id
+        --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs
+        --storage-opt overlay.mountopt=nodev,metacopy=on,noxattrs=1      
 
     steps:
 
