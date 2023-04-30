@@ -19,9 +19,7 @@ jobs:
         --user 1000
         --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs
         --storage-opt overlay.mountopt=nodev,metacopy=on,noxattrs=1
-        -v /mnt/raid10/github-ci/download:/home/dev/dl:Z
-        -v /mnt/raid10/github-ci/sstate/yocto/kirkstone/zero2w-drm/latest:/home/dev/sstate:Z
-        -v /mnt/raid10/github-ci/artifacts/zero2w/drm:/home/dev/artifacts:Z
+        -v $XDG_RUNTIME_DIR/podman/podman.sock:/var/run/docker.sock
 
     steps:
 
