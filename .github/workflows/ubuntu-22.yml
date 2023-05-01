@@ -20,8 +20,7 @@ jobs:
     container:
       image: ghcr.io/meta-flutter/meta-flutter/ubuntu-20-dev:main
       options:
-        --cgroup-manager=cgroupfs
-        --privileged
+        --user=1001:1001
         --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs
         --storage-opt overlay.mountopt=nodev,metacopy=on,noxattrs=1      
 
