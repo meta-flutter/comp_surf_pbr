@@ -1,0 +1,59 @@
+name: ubuntu-20
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, closed ]
+  release:
+    types: [ published, created, edited ]
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  ubuntu-20:
+
+    strategy:
+      fail-fast: false
+  
+    runs-on: [self-hosted, linux]
+
+    container:
+      image: ghcr.io/meta-flutter/meta-flutter/ubuntu-20-dev:main
+      options:
+        --user 1001
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3        
+
+      - name: Install packages
+        run: |
+          git submodule update --init --recursive
+          echo ${{ github.server_url }}
+          clang++ --version
+          cmake --version
+
+      - name: Build Debug Packages
+        run: |
+          mkdir -p ${{github.workspace}}/build/debug
+          CC=/usr/lib/llvm-14/bin/clang CXX=/usr/lib/llvm-14/bin/clang++ cmake \
+            -B ${{github.workspace}}/build/debug \
+            -D CMAKE_BUILD_TYPE=Debug \
+            -D CMAKE_STAGING_PREFIX=${{github.workspace}}/build/staging/usr/local \
+            -D BUILD_NUMBER=${GITHUB_RUN_ID} \
+            -D LLVM_ROOT=/usr/lib/llvm-14
+          make package -j
+          ls -la _packages
+
+      - name: Build Release Packages
+        run: |
+          mkdir -p ${{github.workspace}}/build/release
+          CC=/usr/lib/llvm-14/bin/clang CXX=/usr/lib/llvm-14/bin/clang++ cmake \
+            -B ${{github.workspace}}/build/release \
+            -D CMAKE_BUILD_TYPE=Release \
+            -D CMAKE_STAGING_PREFIX=${{github.workspace}}/build/staging/usr/local \
+            -D BUILD_NUMBER=${GITHUB_RUN_ID} \
+            -D LLVM_ROOT=/usr/lib/llvm-14
+          make package -j
+          ls -la _packages
